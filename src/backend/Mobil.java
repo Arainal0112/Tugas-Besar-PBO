@@ -94,9 +94,31 @@ public class Mobil {
         return noPol;
     }
     
+    
     public static Mobil getById(int id) {
         Mobil mobil = null;
         ResultSet rs = DBHelper.selectQuery("SELECT * FROM mobil " + "WHERE idMobil = " + id + "");
+
+        try {
+            while (rs.next()) {
+                mobil = new Mobil();
+                mobil.setIdMobil(rs.getInt("idMobil"));
+                mobil.setMerk(rs.getString("merk"));
+                mobil.setTipe(rs.getString("tipe"));
+                mobil.setTahun(rs.getString("tahun"));
+                mobil.setNoPol(rs.getString("noPol"));
+                mobil.setHargaSewa(rs.getInt("hargaSewa"));
+                mobil.setStatus(rs.getString("status"));
+                
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return mobil;
+    }
+    public static Mobil getByNoPol(String noPol) {
+        Mobil mobil = null;
+        ResultSet rs = DBHelper.selectQuery("SELECT * FROM mobil " + "WHERE noPol =" + noPol + "");
 
         try {
             while (rs.next()) {

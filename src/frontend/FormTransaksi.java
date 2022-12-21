@@ -647,6 +647,7 @@ public class FormTransaksi extends javax.swing.JFrame {
                     + " '" + lblTotal.getText() + "') ";
             DBHelper.insertQueryGetId(query);
             updateStatusMobil();
+            kosongkanForm();
             tampilkanData();
         }else{
             JOptionPane.showMessageDialog(null, "Silahkan Lengkapi data Peminjaman");

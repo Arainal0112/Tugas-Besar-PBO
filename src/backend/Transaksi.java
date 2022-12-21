@@ -80,23 +80,24 @@ public class Transaksi {
         this.total = total;
     }
     
+  
     
     public static Transaksi getById(int id) {
         Transaksi trans = null;
-        ResultSet rs = DBHelper.selectQuery("SELECT transaksi.*, mobil.noPol FROM transaksi "
+        ResultSet rs = DBHelper.selectQuery("SELECT transaksi.*, mobil.* FROM transaksi "
                                 + " LEFT JOIN mobil ON transaksi.idMobil = mobil.idMobil"
-                                + " WHERE idMobil = " + id);
+                                + " WHERE idTransaksi = " + id);
 
         try {
             while (rs.next()) {
                 Mobil mobil = new Mobil();
                 mobil.setIdMobil(rs.getInt("idMobil"));
-//                mobil.setMerk(rs.getString("merk"));
-//                mobil.setTipe(rs.getString("tipe"));
-//                mobil.setTahun(rs.getString("tahun"));
+                mobil.setMerk(rs.getString("merk"));
+                mobil.setTipe(rs.getString("tipe"));
+                mobil.setTahun(rs.getString("tahun"));
                 mobil.setNoPol(rs.getString("noPol"));
-//                mobil.setHargaSewa(rs.getInt("hargaSewa"));
-//                mobil.setStatus(rs.getString("status"));
+                mobil.setHargaSewa(rs.getInt("hargaSewa"));
+                mobil.setStatus(rs.getString("status"));
                 
                 trans = new Transaksi();
                 trans.setMobil(mobil);
@@ -148,7 +149,7 @@ public class Transaksi {
 
     public static ArrayList<Transaksi> search(String keyword) {
         ArrayList<Transaksi> listTransaksi = new ArrayList<>();
-        String query = "SELECT  mobil.noPol, transaksi.* FROM transaksi "
+        String query = "SELECT  mobil.*, transaksi.* FROM transaksi "
                         + "LEFT JOIN  mobil ON transaksi.idMobil = mobil.idMobil"
                         + " WHERE merk LIKE '%"+keyword+"%'"
                         + " OR tipe LIKE '%"+keyword+"%'"
